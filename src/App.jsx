@@ -86,10 +86,11 @@ const App = () => {
   },
 ])
 
-const addToTeam = (fighter) => {
+const handleAddFighter = (fighter) => {
   if (money >= fighter.price) {
     setTeam([...team, fighter])
     setMoney(money - fighter.price)
+    setZombieFighters(zombieFighters.filter(zf => zf.id !== fighter.id))
   } else {
     alert('Not enough money!')
   }
@@ -107,12 +108,11 @@ return (
           <p>Price: ${fighter.price}</p>
           <p>Strength: {fighter.strength}</p>
           <p>Agility: {fighter.agility}</p>
-          <button onClick={() => addToTeam(fighter)}>Add</button>
+          <button onClick={() => handleAddFighter(fighter)}>Add</button>
         </li>
       ))}
     </ul>
   </div>
 )
 }
-
 export default App

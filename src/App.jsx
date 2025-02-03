@@ -95,6 +95,14 @@ const handleAddFighter = (fighter) => {
     alert('Not enough money!')
   }
 }
+const handleRemoveFighter = (fighter) => {
+  setTeam(team.filter(member => member.id !== fighter.id))
+  setMoney(money + fighter.price)
+  setZombieFighters([...zombieFighters, fighter])
+}
+
+const totalStrength = team.reduce((total, member) => total + member.strength, 0)
+const totalAgility = team.reduce((total, member) => total + member.agility, 0)
 
 return (
   <div>
@@ -112,7 +120,27 @@ return (
         </li>
       ))}
     </ul>
-  </div>
-)
+    <h2>Your Team</h2>
+      {team.length === 0 ? (
+        <p>Pick some team members!</p>
+      ) : (
+        <ul>
+          {team.map(member => (
+            <li key={member.id}>
+              <img src={member.img} alt={member.name} />
+              <h2>{member.name}</h2>
+              <p>Price: ${member.price}</p>
+              <p>Strength: {member.strength}</p>
+              <p>Agility: {member.agility}</p>
+              <button onClick={() => handleRemoveFighter(member)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p>Total Strength: {totalStrength}</p>
+      <p>Total Agility: {totalAgility}</p>
+    </div>
+  )
 }
+
 export default App
